@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <fragment
+        android:id="@+id/likesFragment"
+        android:name="com.example.swapapp20.LikesFragment"
+        tools:layout="@layout/fragment_likes">
+
+        <action
+            android:id="@+id/action_likesFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.swapapp20.ProfileFragment"
+        tools:layout="@layout/fragment_profile">
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+    </fragment>
+</navigation>

@@ -1,0 +1,233 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/colorBackground">
+
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profileImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="16dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profile" />
+
+    <TextView
+        android:id="@+id/profileName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="center"
+        android:layout_marginStart="131dp"
+        android:layout_marginBottom="8dp"
+        android:text="User Name"
+        android:textSize="20sp"
+        android:fontFamily="@font/tiemposheadlinesemibold"/>
+
+    <TextView
+        android:id="@+id/postCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="134dp"
+        android:layout_marginTop="30dp"
+        android:text="0"
+        android:textSize="16sp"
+        android:fontFamily="@font/tiemposheadlinesemibold"/>
+
+    <TextView
+        android:id="@+id/postTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="151dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/tiemposheadlinesemibold"
+        android:text="Posts"
+        android:textSize="16sp" />
+
+</RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D3D3D3"
+        />
+
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="26dp"
+        android:scrollbars="none"
+        android:layout_margin="6dp"
+        >
+
+     <LinearLayout
+         android:layout_width="wrap_content"
+         android:layout_height="26dp"
+         android:orientation="horizontal">
+
+
+       <ImageView
+           android:layout_width="20dp"
+           android:layout_height="20dp"
+           android:src="@drawable/gender"
+           android:contentDescription="icon"
+           android:paddingEnd="2dp"/>
+         <TextView
+             android:id="@+id/profileGender"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="gender"
+             android:textSize="11sp"
+             android:layout_marginEnd="5dp"
+             android:layout_marginTop="2dp"
+             />
+
+         <View
+             android:layout_width="1dp"
+             android:layout_height="24dp"
+             android:background="#D3D3D3" />
+
+
+         <ImageView
+             android:layout_width="20dp"
+             android:layout_height="20dp"
+             android:src="@drawable/hanger"
+             android:contentDescription="icon"
+             android:paddingEnd="2dp"
+             android:layout_marginStart="5dp"/>
+         <TextView
+             android:id="@+id/profileSize"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="size"
+             android:textSize="11sp"
+             android:layout_marginEnd="5dp"
+             android:layout_marginTop="2dp"
+           />
+
+         <View
+             android:layout_width="1dp"
+             android:layout_height="24dp"
+             android:background="#D3D3D3" />
+
+
+         <ImageView
+             android:layout_width="20dp"
+             android:layout_height="20dp"
+             android:src="@drawable/location"
+             android:contentDescription="icon"
+             android:paddingEnd="2dp"
+             android:layout_marginStart="5dp"/>
+         <TextView
+             android:id="@+id/profileLocation"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="location"
+             android:textSize="11sp"
+             android:layout_marginEnd="5dp"
+             android:layout_marginTop="2dp"
+             />
+
+         <View
+             android:layout_width="1dp"
+             android:layout_height="24dp"
+             android:background="#D3D3D3" />
+
+         <ImageView
+             android:layout_width="20dp"
+             android:layout_height="20dp"
+             android:src="@drawable/gender"
+             android:contentDescription="icon"
+             android:paddingEnd="2dp"
+             android:layout_marginStart="5dp"/>
+         <TextView
+             android:id="@+id/profileHeight"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="height"
+             android:layout_marginEnd="5dp"
+             android:textSize="11sp"
+             android:layout_marginTop="2dp"
+             />
+
+         <View
+             android:layout_width="1dp"
+             android:layout_height="24dp"
+             android:background="#D3D3D3" />
+
+         <ImageView
+             android:layout_width="20dp"
+             android:layout_height="20dp"
+             android:src="@drawable/cake"
+             android:contentDescription="icon"
+             android:paddingEnd="2dp"
+             android:layout_marginStart="5dp"/>
+         <TextView
+             android:id="@+id/profileAge"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="age"
+             android:layout_marginEnd="5dp"
+             android:textSize="11sp"
+             android:layout_marginTop="2dp"/>
+
+         <View
+             android:layout_width="1dp"
+             android:layout_height="24dp"
+             android:background="#D3D3D3" />
+
+         <ImageView
+             android:layout_width="20dp"
+             android:layout_height="20dp"
+             android:src="@drawable/clothes"
+             android:contentDescription="icon"
+             android:paddingEnd="2dp"
+             android:layout_marginStart="5dp"/>
+         <TextView
+             android:id="@+id/profileStyle"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="style"
+             android:layout_marginEnd="10dp"
+             android:textSize="11sp"
+             android:layout_marginTop="2dp"
+             />
+
+
+         </LinearLayout>
+    </HorizontalScrollView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D3D3D3"
+        />
+
+
+        <Button
+            android:id="@+id/editProfileButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Profile"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/postsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>

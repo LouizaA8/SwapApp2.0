@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Size">
+    <LinearLayout
+        android:id="@+id/size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        android:layout_marginTop="50dp">
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@drawable/circle"
+            android:contentDescription="icon_name"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="8dp"
+            />
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@drawable/circle"
+            android:contentDescription="icon_name"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="8dp"
+            />
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@drawable/circle"
+            android:contentDescription="icon_name"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="8dp"
+            />
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/clothes"
+            android:contentDescription="icon"
+            android:layout_marginRight="6dp"
+            />
+
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="6dp"
+            android:contentDescription="icon_name"
+            android:src="@drawable/grey_icon" />
+
+
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/name_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/size"
+        android:text="What is your size?"
+        android:fontFamily="@font/tiemposheadlinesemibold"
+        android:textSize="30sp"
+
+        android:padding="20dp"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/name_size"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="20dp">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/sizePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleSelection="true"
+            >
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/XXS"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XXS"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/XS"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XS"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/S"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="S"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/M"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="M"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/L"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="L"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/XL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="XL"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/XXL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="XXL"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/WPNTS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="Prefer not to say"/>
+
+        </com.google.android.material.chip.ChipGroup>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/nextLocation"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/circle_right"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="30dp"
+        android:contentDescription="next"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,25 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frame_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".LikesFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewLikes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMatches"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp" />
+    <TextView
+        android:id="@+id/emptyViewText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</FrameLayout>

@@ -1,0 +1,54 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/editName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name" />
+
+        <EditText
+            android:id="@+id/editStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Style" />
+
+        <EditText
+            android:id="@+id/editSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Size" />
+
+        <EditText
+            android:id="@+id/editHeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Height" />
+
+        <EditText
+            android:id="@+id/editLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Location" />
+
+        <EditText
+            android:id="@+id/editAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Age" />
+
+        <EditText
+            android:id="@+id/editGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Gender" />
+
+    </LinearLayout>
+</ScrollView>
