@@ -1,12 +1,14 @@
 package com.example.swapapp20;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -67,7 +70,7 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
         // Set click listener to navigate to chat or user profile
         holder.itemView.setOnClickListener(v -> {
             // You can implement navigation to a chat screen or user profile here
-            navigateToUserProfile(otherUserId);
+            navigateToChat(otherUserId);
         });
     }
 
@@ -118,13 +121,38 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
                 });
     }
 
-    private void navigateToUserProfile(String userId) {
-        ProfileFragment profileFragment = ProfileFragment.newInstance(userId);
-        ((FragmentActivity) context).getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.frame_container, profileFragment)
-                .addToBackStack(null)
-                .commit();
+    private void navigateToChat(String userId) {
+        String currentUserId = auth.getCurrentUser() != null ? auth.getCurrentUser().getUid() : "";
+        final boolean[] chatFound = {false};  // Use array to modify in lambda
+
+        firestore.collection("chats")
+                .whereArrayContains("participants", currentUserId) // Changed from querying "users" to "participants"
+                .get()
+                .addOnSuccessListener(queryDocuments -> {
+                    for (DocumentSnapshot doc : queryDocuments) {
+                        List<String> participants = (List<String>) doc.get("participants");
+                        if (participants != null && participants.contains(userId)) {
+                            chatFound[0] = true;
+                            String chatId = doc.getId();
+
+                            // Navigate to the chat detail fragment
+                            Intent intent = new Intent(context, ChatActivity.class);
+                            intent.putExtra("chatId", chatId);
+                            intent.putExtra("otherUserId", userId);
+                            context.startActivity(intent);
+                            break;  // Exit loop once we find a chat
+                        }
+                    }
+
+                    // Only show toast if no chat was found
+                    if (!chatFound[0]) {
+                        Toast.makeText(context, "Chat not found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error finding chat", e);
+                    Toast.makeText(context, "Error finding chat", Toast.LENGTH_SHORT).show();
+                });
     }
 
     @Override

@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(new HomeFragment());
             } else if (itemId == R.id.chatOpt) {
                 replaceFragment(new ChatsFragment());
+                } else if (itemId == R.id.matchesOpt) {
+                replaceFragment(new MatchesFragment());
             } else if (itemId == R.id.likesOpt) {
                 replaceFragment(new LikesFragment());
             } else if (itemId == R.id.profileOpt) {

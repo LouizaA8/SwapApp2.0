@@ -9,11 +9,12 @@ public class NotificationModel {
     private String senderId;
     private long timestamp;
     private String senderUsername;
+    private String type;
 
     public NotificationModel() {} // Required for Firestore
 
     public NotificationModel(String imageUrl, String message, String postId,
-                             String receiverId, String senderId, String senderUsername) {
+                             String receiverId, String senderId, String senderUsername, String type) {
         this.imageUrl = imageUrl;
         this.message = message;
         this.postId = postId;
@@ -21,6 +22,7 @@ public class NotificationModel {
         this.senderId = senderId;
         this.timestamp = System.currentTimeMillis();
         this.senderUsername = senderUsername;
+        this.type = type;
     }
 
     // Getters and Setters
@@ -47,4 +49,8 @@ public class NotificationModel {
 
     public long getTimestamp() { return timestamp; }
     public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
+
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
+
 }

@@ -76,3 +76,9 @@ dependencies {
     implementation(libs.recyclerview)
     implementation (libs.circleimageview)
 }}
+dependencies {
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    implementation(libs.activity)
+    implementation(libs.constraintlayout)
+}

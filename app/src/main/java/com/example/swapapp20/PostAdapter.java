@@ -275,25 +275,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     }
 
     // Add a fallback method if we can't get the user's name
-    private void createGenericNotification(Post post, String currentUserId) {
-        NotificationModel notification = new NotificationModel(
-                post.getImageUrl(),
-                "requested a swap",
-                post.getPostId(),
-                post.getUserId(),
-                currentUserId,
-                "A user" // Generic fallback
-        );
 
-        notification.setTimestamp(System.currentTimeMillis());
-
-        firestore.collection("notifications")
-                .add(notification)
-                .addOnSuccessListener(docRef ->
-                        Log.d(TAG, "Generic notification created successfully"))
-                .addOnFailureListener(e ->
-                        Log.e(TAG, "Error creating generic notification", e));
-    }
 
     private void updateUIAfterSwap(PostViewHolder holder,  boolean isSwapped) {
 

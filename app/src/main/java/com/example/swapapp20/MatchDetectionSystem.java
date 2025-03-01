@@ -106,10 +106,17 @@ public class MatchDetectionSystem {
         firestore.collection("matches")
                 .document(matchId)
                 .set(matchData)
-                .addOnSuccessListener(aVoid -> Log.d(TAG, "Match record created successfully"))
+                .addOnSuccessListener(aVoid -> {
+                    Log.d(TAG, "Match record created successfully");
+                    // Create a Match object to pass to createChatForMatch
+                    Match match = new Match(user1Id, user2Id, post1Id, post2Id);
+                    match.setId(matchId);
+
+                    // Create a chat for this match
+                    ChatsFragment.createChatForMatch(match);
+                })
                 .addOnFailureListener(e -> Log.e(TAG, "Error creating match record", e));
     }
-
     /**
      * Send match notifications to both users involved in the match
      */

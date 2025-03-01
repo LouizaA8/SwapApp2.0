@@ -47,15 +47,6 @@ public class LikesFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-        matchesList = new ArrayList<>();
-        matchAdapter = new MatchAdapter(requireContext(), matchesList);
-        emptyMatchesText = view.findViewById(R.id.emptyViewText);
-
-        recyclerViewMatches.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerViewMatches.setAdapter(matchAdapter);
-
-        loadMatches();
-
 
         loadNotifications();
 
@@ -98,48 +89,7 @@ public class LikesFragment extends Fragment {
                     }
                 });
     }
-    private void loadMatches() {
-        if (auth.getCurrentUser() == null) return;
 
-        String currentUserId = auth.getCurrentUser().getUid();
 
-        // Query for matches where the current user is either user1 or user2
-        firestore.collection("matches")
-                .whereEqualTo("isActive", true)
-                .whereArrayContains("users", currentUserId)  // Assuming you have a users array field in your match documents
-                .orderBy("timestamp", Query.Direction.DESCENDING)
-                .addSnapshotListener((value, error) -> {
-                    if (error != null) {
-                        Log.e(TAG, "Error loading matches", error);
-                        Toast.makeText(getContext(), "Error loading matches", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    if (value != null) {
-                        matchesList.clear();
-
-                        for (DocumentSnapshot doc : value.getDocuments()) {
-                            Match match = doc.toObject(Match.class);
-                            if (match != null) {
-                                match.setId(doc.getId());
-                                matchesList.add(match);
-                            }
-                        }
-
-                        matchAdapter.notifyDataSetChanged();
-
-                        // Update UI to show empty state if needed
-                        if (matchesList.isEmpty()) {
-                            emptyMatchesText.setVisibility(View.VISIBLE);
-                            recyclerViewMatches.setVisibility(View.GONE);
-                        } else {
-                            emptyMatchesText.setVisibility(View.GONE);
-                            recyclerViewMatches.setVisibility(View.VISIBLE);
-                        }
-
-                        Log.d(TAG, "Loaded " + matchesList.size() + " matches");
-                    }
-                });
-    }
 }
 

@@ -11,6 +11,11 @@
         android:title="Likes"
         android:icon="@drawable/likes"
         />
+    <item
+        android:id="@+id/matchesOpt"
+        android:title="Matches"
+        android:icon="@drawable/swap_horizontal_circle_unfilled"
+        />
 
     <item
         android:id="@+id/chatOpt"
