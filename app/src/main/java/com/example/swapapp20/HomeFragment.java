@@ -34,11 +34,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        Button uploadButton = view.findViewById(R.id.uploadButton);
-        uploadButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), Upload.class);
-            startActivity(intent);
-        });
+
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

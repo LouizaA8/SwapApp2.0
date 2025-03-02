@@ -1,6 +1,7 @@
 package com.example.swapapp20;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -54,6 +55,11 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        Button uploadButton = view.findViewById(R.id.uploadButton);
+        uploadButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), Upload.class);
+            startActivity(intent);
+        });
         initializeFirebase();
         initializeViews(view);
         setupRecyclerView();

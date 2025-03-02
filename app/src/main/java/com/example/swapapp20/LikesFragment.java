@@ -19,6 +19,7 @@ import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class LikesFragment extends Fragment {
     private static final String TAG = "LikesFragment";
@@ -36,8 +37,12 @@ public class LikesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_likes, container, false);
 
+        TextView emptyViewText = view.findViewById(R.id.emptyViewText);
+
+
+        emptyViewText.setVisibility(View.GONE);
+
         recyclerView = view.findViewById(R.id.recyclerViewLikes);
-        recyclerViewMatches = view.findViewById(R.id.recyclerViewMatches);
 
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
@@ -56,6 +61,7 @@ public class LikesFragment extends Fragment {
     private void loadNotifications() {
         if (auth.getCurrentUser() == null) return;
 
+
         String currentUserId = auth.getCurrentUser().getUid();
 
         firestore.collection("notifications")
@@ -70,7 +76,8 @@ public class LikesFragment extends Fragment {
                         return;
                     }
 
-                    if (value != null) {
+                    if (value != null && isAdded()) {
+                        TextView emptyViewText = requireView().findViewById(R.id.emptyViewText);
                         notifications.clear();
                         for (DocumentSnapshot doc : value.getDocuments()) {
                             Log.d(TAG, "Document ID: " + doc.getId());
@@ -83,6 +90,13 @@ public class LikesFragment extends Fragment {
                             } else {
                                 Log.e(TAG, "Null notification object for doc: " + doc.getId());
                             }
+                        }
+                        if (notifications.isEmpty()) {
+                            recyclerView.setVisibility(View.GONE);
+                            emptyViewText.setVisibility(View.VISIBLE);
+                        } else {
+                            recyclerView.setVisibility(View.VISIBLE);
+                            emptyViewText.setVisibility(View.GONE);
                         }
                         adapter.notifyDataSetChanged();
                         Log.d(TAG, "Loaded " + notifications.size() + " notifications");

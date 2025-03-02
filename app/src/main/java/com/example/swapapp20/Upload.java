@@ -12,44 +12,33 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cloudinary.Cloudinary;
 import com.cloudinary.android.MediaManager;
 import com.cloudinary.android.callback.ErrorInfo;
 import com.cloudinary.android.callback.UploadCallback;
-import com.cloudinary.utils.ObjectUtils;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Upload extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri imageUri;
     private ImageView imageView;
-    private EditText captionInput, hashtagsInput;
+    private EditText captionInput;
     private ProgressBar progressBar;
     private FirebaseFirestore db;
     private RecyclerView recyclerView;
-    private PostAdapter postAdapter;
-    private List<Post> postList;
-    private Cloudinary cloudinary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
 
-
-
         // Initialize Cloudinary MediaManager
         try {
-            Map config = new HashMap();
+            Map<String, String> config = new HashMap<>();
             config.put("cloud_name", "dneo2modd");
             config.put("api_key", "112493554574789");
             config.put("api_secret", "t7Bil7eAGkVQDxXizgrLMSlMWCc");
@@ -70,10 +59,7 @@ public class Upload extends AppCompatActivity {
 
         pickImageButton.setOnClickListener(v -> openFileChooser());
         uploadButton.setOnClickListener(v -> uploadImageToCloudinary());
-
-
     }
-
 
     private void openFileChooser() {
         Intent intent = new Intent();
@@ -135,7 +121,6 @@ public class Upload extends AppCompatActivity {
 
     private void savePostToFirestore(String imageUrl) {
         String caption = captionInput.getText().toString().trim();
-        String hashtags = hashtagsInput.getText().toString().trim();
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         if (userId == null) {
@@ -144,16 +129,9 @@ public class Upload extends AppCompatActivity {
             return;
         }
 
-        if (caption.isEmpty() || hashtags.isEmpty()) {
-            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-            progressBar.setVisibility(View.GONE);
-            return;
-        }
-
         Map<String, Object> post = new HashMap<>();
         post.put("imageUrl", imageUrl);
         post.put("caption", caption);
-        post.put("hashtags", hashtags);
         post.put("timestamp", System.currentTimeMillis());
         post.put("userId", userId);
         post.put("likes", 0);
@@ -166,7 +144,6 @@ public class Upload extends AppCompatActivity {
 
                     // Clear input fields and reset image
                     captionInput.setText("");
-                    hashtagsInput.setText("");
                     imageView.setImageURI(null);
                     imageUri = null;
 
@@ -177,13 +154,6 @@ public class Upload extends AppCompatActivity {
                     Toast.makeText(Upload.this, "Upload failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                 });
-    }
-
-    private void updateLikeCount(String postId, int currentLikes) {
-        DocumentReference postRef = db.collection("posts").document(postId);
-        postRef.update("likes", currentLikes + 1)
-                .addOnSuccessListener(aVoid -> Log.d("FirestoreUpdate", "Like count updated"))
-                .addOnFailureListener(e -> Log.e("FirestoreUpdate", "Failed to update like count: " + e.getMessage()));
     }
 
     @Override

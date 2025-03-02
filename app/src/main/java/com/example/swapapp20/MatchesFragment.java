@@ -43,7 +43,7 @@ public class MatchesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_matches, container, false);
 
         recyclerViewMatches = view.findViewById(R.id.recyclerViewMatches);
@@ -71,6 +71,7 @@ public class MatchesFragment extends Fragment {
     private void loadMatches() {
         if (auth.getCurrentUser() == null) return;
 
+
         String currentUserId = auth.getCurrentUser().getUid();
 
         // Query for matches where the current user is either user1 or user2
@@ -86,6 +87,7 @@ public class MatchesFragment extends Fragment {
                     }
 
                     if (value != null) {
+                        emptyMatchesText = requireView().findViewById(R.id.emptyMatchesText);
                         matchesList.clear();
 
                         for (DocumentSnapshot doc : value.getDocuments()) {
@@ -96,9 +98,6 @@ public class MatchesFragment extends Fragment {
                             }
                         }
 
-                        matchAdapter.notifyDataSetChanged();
-
-                        // Update UI to show empty state if needed
                         if (matchesList.isEmpty()) {
                             emptyMatchesText.setVisibility(View.VISIBLE);
                             recyclerViewMatches.setVisibility(View.GONE);
@@ -106,7 +105,7 @@ public class MatchesFragment extends Fragment {
                             emptyMatchesText.setVisibility(View.GONE);
                             recyclerViewMatches.setVisibility(View.VISIBLE);
                         }
-
+                        matchAdapter.notifyDataSetChanged();
                         Log.d(TAG, "Loaded " + matchesList.size() + " matches");
                     }
                 });

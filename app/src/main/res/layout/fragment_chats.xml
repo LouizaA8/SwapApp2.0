@@ -13,6 +13,8 @@
     <TextView
         android:id="@+id/emptyChatsText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="No chats available"
+        android:layout_gravity="center"/>
 
 </FrameLayout>

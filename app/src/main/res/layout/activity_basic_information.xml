@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/md_theme_background"
     tools:context=".BasicInformation">
 
     <TextView
@@ -17,13 +18,23 @@
         android:text="Adding basic information leads to better matches"
         android:fontFamily="@font/tiemposheadlinesemibold"
         android:textSize="40sp"
-
         android:padding="20dp"
         android:layout_marginTop="10sp"
         />
+
+    <ImageView
+        android:id="@+id/afro_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/afro"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        />
     <com.google.android.material.button.MaterialButton
         android:id="@+id/basicInfoButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Enter basic info"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -32,8 +43,8 @@
         android:textAllCaps="false"
         android:fontFamily="@font/tiemposheadlinemedium"
         android:textSize="20sp"
-        android:padding="10dp"
-        app:cornerRadius="20dp"
+        android:padding="20dp"
+        app:cornerRadius="0dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

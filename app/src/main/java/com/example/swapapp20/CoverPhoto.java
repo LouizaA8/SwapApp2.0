@@ -78,7 +78,6 @@ public class CoverPhoto extends AppCompatActivity {
 
         uploadPhoto.setOnClickListener(v -> ImagePicker.with(CoverPhoto.this)
                 .maxResultSize(1080, 1080)
-                .compress(1024)
                 .start());
     }
 
