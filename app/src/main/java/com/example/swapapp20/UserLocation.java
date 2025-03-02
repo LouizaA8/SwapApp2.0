@@ -60,7 +60,7 @@ public class UserLocation extends AppCompatActivity implements OnMapReadyCallbac
 
         // Initialize Places API
         if (!Places.isInitialized()) {
-            Places.initialize(getApplicationContext(), "AIzaSyD-FScI4gRMwooxGrL-Wy5FxflV7GobqpU");
+            Places.initialize(getApplicationContext(), getString(R.string.maps_api_key));
         }
 
         // Initialize Map Fragment

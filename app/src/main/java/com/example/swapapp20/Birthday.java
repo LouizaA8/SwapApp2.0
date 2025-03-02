@@ -70,6 +70,6 @@ public class Birthday extends AppCompatActivity {
         }
 
         // Display the age in the TextView
-        ageTextView.setText( age );
+        ageTextView.setText(String.valueOf(age));
     }
 }
