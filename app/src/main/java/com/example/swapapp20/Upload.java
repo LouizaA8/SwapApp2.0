@@ -138,6 +138,8 @@ public class Upload extends AppCompatActivity {
 
         db.collection("posts").add(post)
                 .addOnSuccessListener(documentReference -> {
+                    String postId = documentReference.getId();
+                    db.collection("posts").document(postId).update("postId", postId);
                     Log.d("FirestoreUpload", "Post saved with ID: " + documentReference.getId());
                     Toast.makeText(Upload.this, "Post uploaded!", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);

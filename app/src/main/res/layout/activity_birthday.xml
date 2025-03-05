@@ -93,7 +93,7 @@
         android:text="0"
         android:fontFamily="@font/tiemposheadlinesemibold"
         android:textSize="30sp"
-        android:padding="20dp"
+
         />
     <TextView
         android:id="@+id/age_textview"
@@ -105,7 +105,7 @@
         android:text="Age "
         android:fontFamily="@font/tiemposheadlinesemibold"
         android:textSize="30sp"
-        android:padding="20dp"
+
         />
 
     <ImageView

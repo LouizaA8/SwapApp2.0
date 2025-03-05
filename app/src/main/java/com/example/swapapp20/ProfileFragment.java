@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements PostDetailFragment.OnPostClickListener {
     private static final String TAG = "ProfileFragment";
     private static final String ARG_USER_ID = "userId";
 
@@ -103,6 +104,36 @@ public class ProfileFragment extends Fragment {
         postsAdapter = new ProfilePostsAdapter(requireContext(), userPosts);
         postsRecyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 3)); // 3 columns for grid
         postsRecyclerView.setAdapter(postsAdapter);
+
+        // Set click listener for posts
+        postsAdapter.setOnItemClickListener(this);
+    }
+
+    @Override
+    public void onPostClick(int position) {
+        Log.d(TAG, "Post clicked at position: " + position);
+        if (position >= 0 && position < userPosts.size()) {
+            Post clickedPost = userPosts.get(position);
+            Log.d(TAG, "Opening detail view for post: " + clickedPost.getPostId());
+
+            // Create and show the PostDetailFragment
+            PostDetailFragment detailFragment = PostDetailFragment.newInstance(displayedUserId, position);
+
+            if (getActivity() != null) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frameLayout, detailFragment)
+                        .addToBackStack("postDetail")
+                        .commit();
+
+                // Log for debugging
+                Log.d(TAG, "Transaction committed to show PostDetailFragment");
+                Toast.makeText(requireContext(), "Opening post...", Toast.LENGTH_SHORT).show();
+            } else {
+                Log.e(TAG, "Activity is null, can't perform fragment transaction");
+            }
+        } else {
+            Log.e(TAG, "Invalid position: " + position);
+        }
     }
 
     private void loadProfileData() {
@@ -175,11 +206,15 @@ public class ProfileFragment extends Fragment {
                     for (DocumentSnapshot snapshot : queryDocumentSnapshots) {
                         Post post = snapshot.toObject(Post.class);
                         if (post != null) {
+                            // Add this critical line
+                            post.setPostId(snapshot.getId());
                             userPosts.add(post);
+                            Log.d(TAG, "Added post: " + post.getPostId());
                         }
                     }
                     postCount.setText(String.valueOf(userPosts.size())); // Update post count
                     postsAdapter.notifyDataSetChanged();
+                    Log.d(TAG, "Fetched " + userPosts.size() + " posts");
                 })
                 .addOnFailureListener(e -> Log.e(TAG, "Error fetching user posts", e));
     }

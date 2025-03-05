@@ -24,7 +24,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/captionInput"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/pickImageButton"
             android:hint="Enter item description" />
 

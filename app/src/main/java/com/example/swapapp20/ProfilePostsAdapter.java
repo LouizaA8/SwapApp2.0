@@ -1,112 +1,116 @@
 package com.example.swapapp20;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
-import de.hdodenhof.circleimageview.CircleImageView;
+
 import java.util.List;
 
-public class ProfilePostsAdapter extends RecyclerView.Adapter<ProfilePostsAdapter.ViewHolder> {
+public class ProfilePostsAdapter extends RecyclerView.Adapter<ProfilePostsAdapter.PostViewHolder> {
     private static final String TAG = "ProfilePostsAdapter";
     private final Context context;
-    private final List<Post> posts;
+    private final List<Post> postList;
+    private PostDetailFragment.OnPostClickListener onItemClickListener;
 
-    public ProfilePostsAdapter(Context context, List<Post> posts) {
+    public ProfilePostsAdapter(Context context, List<Post> postList) {
         this.context = context;
-        this.posts = posts;
+        this.postList = postList;
+        Log.d(TAG, "Adapter created with " + (postList != null ? postList.size() : 0) + " posts");
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
-
-        // Hide all elements except the post image
-        TextView userName = view.findViewById(R.id.userName);
-        TextView userLocation = view.findViewById(R.id.userLocation);
-        Button swapButton = view.findViewById(R.id.swapButton);
-        CircleImageView userProfileImage = view.findViewById(R.id.userProfileImage);
-        TextView caption = view.findViewById(R.id.caption);
-
-        if (userName != null) userName.setVisibility(View.GONE);
-        if (userLocation != null) userLocation.setVisibility(View.GONE);
-        if (swapButton != null) swapButton.setVisibility(View.GONE);
-        if (userProfileImage != null) userProfileImage.setVisibility(View.GONE);
-        if (caption != null) caption.setVisibility(View.GONE);
-
-        return new ViewHolder(view);
+    public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_grid_post, parent, false);
+        return new PostViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Post post = posts.get(position);
+    public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
+        if (position < 0 || position >= postList.size()) {
+            Log.e(TAG, "Invalid position: " + position + ", list size: " + postList.size());
+            return;
+        }
 
-        // Load only the post image
+        Post post = postList.get(position);
+        if (post == null) {
+            Log.e(TAG, "Post at position " + position + " is null");
+            return;
+        }
+
+        // Log post information
+        Log.d(TAG, "Binding post at position " + position +
+                " with ID: " + (post.getPostId() != null ? post.getPostId() : "null"));
+
+        // Load the post image
         if (post.getImageUrl() != null && !post.getImageUrl().isEmpty()) {
             Glide.with(context)
                     .load(post.getImageUrl())
+                    .centerCrop()
+                    .placeholder(R.drawable.profile)
+                    .error(R.drawable.profile)
                     .into(holder.postImage);
         } else {
             holder.postImage.setImageResource(R.drawable.profile);
         }
 
-        // Set click listener to view the full post as in HomeFragment
-        holder.itemView.setOnClickListener(v -> openPostDetail(post));
-    }
+        // Set explicit click listener on the image and the itemView itself
+        View.OnClickListener clickListener = v -> {
+            int adapterPosition = holder.getBindingAdapterPosition();
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                Log.d(TAG, "Item clicked at position: " + adapterPosition);
 
-    // Method to open post detail view
-    private void openPostDetail(Post post) {
-        if (context instanceof FragmentActivity) {
-            FragmentActivity activity = (FragmentActivity) context;
+                // Show a toast for immediate feedback
+                Toast.makeText(context, "Clicked post " + adapterPosition, Toast.LENGTH_SHORT).show();
 
-            if (post == null || post.getPostId() == null) {
-                Log.e(TAG, "Cannot open post detail: post or postId is null");
-                return;
+                if (onItemClickListener != null) {
+                    Log.d(TAG, "Calling onPostClick listener");
+                    onItemClickListener.onPostClick(adapterPosition);
+                } else {
+                    Log.e(TAG, "Click listener is null");
+                    Toast.makeText(context, "Error: Click listener not set", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Log.e(TAG, "Invalid adapter position");
             }
+        };
 
-            Log.d(TAG, "Opening post detail for post ID: " + post.getPostId());
+        // Apply the click listener to both the itemView and the image
+        holder.itemView.setOnClickListener(clickListener);
+        holder.postImage.setOnClickListener(clickListener);
 
-            // Create a bundle to pass the post ID
-            Bundle bundle = new Bundle();
-            bundle.putString("postId", post.getPostId());
-
-            // Create post detail fragment
-            PostDetailFragment postDetailFragment = new PostDetailFragment();
-            postDetailFragment.setArguments(bundle);
-
-            // Replace current fragment with post detail fragment
-            FragmentManager fragmentManager = activity.getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, postDetailFragment)
-                    .addToBackStack(null)
-                    .commit();
-        } else {
-            Log.e(TAG, "Context is not a FragmentActivity");
-        }
+        // Make sure the views are clickable
+        holder.itemView.setClickable(true);
+        holder.itemView.setFocusable(true);
+        holder.postImage.setClickable(true);
+        holder.postImage.setFocusable(true);
     }
 
     @Override
     public int getItemCount() {
-        return posts.size();
+        return postList != null ? postList.size() : 0;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public void setOnItemClickListener(PostDetailFragment.OnPostClickListener listener) {
+        Log.d(TAG, "Setting click listener: " + (listener != null ? "NOT null" : "null"));
+        this.onItemClickListener = listener;
+    }
+
+    static class PostViewHolder extends RecyclerView.ViewHolder {
         ImageView postImage;
 
-        public ViewHolder(@NonNull View itemView) {
+        public PostViewHolder(@NonNull View itemView) {
             super(itemView);
-            postImage = itemView.findViewById(R.id.postImage);
+            postImage = itemView.findViewById(R.id.gridPostImage);
         }
     }
 }
