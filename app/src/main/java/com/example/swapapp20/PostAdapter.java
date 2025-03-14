@@ -1,6 +1,10 @@
 package com.example.swapapp20;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,11 +45,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         Post post = postList.get(position);
+        holder.post = post;
         if (!isValidBinding(post, holder)) return;
 
         loadPostImage(holder.postImage, post.getImageUrl());
         loadUserProfileData(holder, post.getUserId());
-        setPostText(holder, post);
+
         setupSwapButton(holder, post);
     }
 
@@ -59,6 +64,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             Log.e(TAG, "Invalid userId for loadUserProfileData");
             holder.userProfileImage.setImageResource(R.drawable.profile);
             holder.userLocation.setText("Unknown location"); // Default if no location is found
+            holder.userName.setText("Unknown user");
+
+            // Set caption without username since we don't have one
+            holder.caption.setText(holder.post.getCaption() != null ? holder.post.getCaption() : "");
             return;
         }
 
@@ -81,9 +90,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                         // Load username
                         String username = documentSnapshot.getString("name");
                         if (username != null && !username.isEmpty()) {
-                            holder.userName.setText(username);  // Make sure you have userName in your ViewHolder
+                            holder.userName.setText(username);
+
+                            // Now set the caption with the username
+                            setCaptionWithUsername(holder, holder.post.getCaption(), username);
                         } else {
                             holder.userName.setText("No username");
+                            holder.caption.setText(holder.post.getCaption() != null ? holder.post.getCaption() : "");
                         }
 
                         // Load location
@@ -97,6 +110,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                         holder.userProfileImage.setImageResource(R.drawable.profile);
                         holder.userName.setText("Unknown user");
                         holder.userLocation.setText("Unknown location");
+                        holder.caption.setText(holder.post.getCaption() != null ? holder.post.getCaption() : "");
                     }
                 })
                 .addOnFailureListener(e -> {
@@ -104,9 +118,22 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     holder.userProfileImage.setImageResource(R.drawable.profile);
                     holder.userName.setText("Unknown user");
                     holder.userLocation.setText("Unknown location");
+                    holder.caption.setText(holder.post.getCaption() != null ? holder.post.getCaption() : "");
                 });
     }
 
+    // New helper method to set the caption with username in bold
+    private void setCaptionWithUsername(PostViewHolder holder, String caption, String username) {
+        caption = caption != null ? caption : "";
+
+        // Create a SpannableString to make the username bold
+        SpannableString spannableString = new SpannableString(username + " " + caption);
+        spannableString.setSpan(new StyleSpan(Typeface.BOLD), 0, username.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // Set the formatted text to the caption TextView
+        holder.caption.setText(spannableString);
+    }
     private void loadPostImage(ImageView imageView, String imageUrl) {
         if (imageUrl != null && !imageUrl.isEmpty()) {
             Glide.with(context)
@@ -118,9 +145,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
     }
 
-    private void setPostText(PostViewHolder holder, Post post) {
-        holder.caption.setText(post.getCaption() != null ? post.getCaption() : "");
-    }
+
 
     private void setupSwapButton(PostViewHolder holder, Post post) {
         String currentUserId = auth.getCurrentUser() != null ? auth.getCurrentUser().getUid() : null;
@@ -310,6 +335,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         final TextView caption, userLocation, userName;
         final Button swapButton;
         final CircleImageView userProfileImage;
+        Post post;
 
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);

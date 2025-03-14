@@ -1,14 +1,12 @@
 package com.example.swapapp20;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -17,8 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
@@ -64,14 +60,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         // Set time ago
         holder.timeAgo.setText(getTimeAgo(notification.getTimestamp()));
 
-        // Set click listener to navigate to user profile
+        // Set click listener to navigate to user profile for all notification types
         holder.itemView.setOnClickListener(v -> {
             if (notification.getSenderId() != null && !notification.getSenderId().isEmpty()) {
                 navigateToUserProfile(notification.getSenderId());
             }
         });
     }
-
 
     private void loadSenderProfileImage(ImageView profileImage, String senderId) {
         if (senderId == null || senderId.isEmpty()) {
@@ -109,8 +104,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
 
         fragmentManager.beginTransaction()
-                .replace(R.id.frame_container, profileFragment) // Replace the current fragment
-                .addToBackStack(null) // Add the transaction to the back stack
+                .replace(R.id.frame_container, profileFragment)
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -161,36 +156,5 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         // Convert to months
         long months = days / 30;
         return months + " months ago";
-    }
-
-    private void navigateToChat(String otherUserId) {
-        // First, find the chat ID for these users
-        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        FirebaseFirestore.getInstance().collection("chats")
-                .whereArrayContains("participants", currentUserId)
-                .get()
-                .addOnSuccessListener(queryDocuments -> {
-                    for (DocumentSnapshot doc : queryDocuments) {
-                        List<String> participants = (List<String>) doc.get("participants");
-                        if (participants != null && participants.contains(otherUserId)) {
-                            String chatId = doc.getId();
-
-                            // Navigate to the chat detail fragment
-                            Intent intent = new Intent(context, ChatActivity.class);
-                            intent.putExtra("chatId", chatId);
-                            intent.putExtra("otherUserId", otherUserId);
-                            context.startActivity(intent);
-
-                        }
-                    }
-
-                    // No chat found, show a toast
-                    Toast.makeText(context, "Chat not found", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> {
-                    Log.e(TAG, "Error finding chat", e);
-                    Toast.makeText(context, "Error finding chat", Toast.LENGTH_SHORT).show();
-                });
     }
 }

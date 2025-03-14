@@ -51,6 +51,7 @@
         android:textColor="#808080"
         android:textSize="12sp" />
 
+
     <TextView
         android:id="@+id/unreadCount"
         android:layout_width="wrap_content"

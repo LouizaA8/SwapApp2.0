@@ -22,8 +22,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHolder> {
     private static final String TAG = "MatchAdapter";
@@ -126,7 +128,7 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
         final boolean[] chatFound = {false};  // Use array to modify in lambda
 
         firestore.collection("chats")
-                .whereArrayContains("participants", currentUserId) // Changed from querying "users" to "participants"
+                .whereArrayContains("participants", currentUserId)
                 .get()
                 .addOnSuccessListener(queryDocuments -> {
                     for (DocumentSnapshot doc : queryDocuments) {
@@ -144,9 +146,9 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
                         }
                     }
 
-                    // Only show toast if no chat was found
+                    // If no chat was found, create a new one
                     if (!chatFound[0]) {
-                        Toast.makeText(context, "Chat not found", Toast.LENGTH_SHORT).show();
+                        createNewChat(currentUserId, userId);
                     }
                 })
                 .addOnFailureListener(e -> {
@@ -155,6 +157,38 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MatchViewHol
                 });
     }
 
+    private void createNewChat(String currentUserId, String otherUserId) {
+        // Create a list of participants
+        List<String> participants = java.util.Arrays.asList(currentUserId, otherUserId);
+
+        // Create a new chat document
+        ChatModel newChat = new ChatModel();
+        newChat.setParticipants(participants);
+        // Set initial unread counts to 0
+        Map<String, Integer> unreadCount = new HashMap<>();
+        unreadCount.put(currentUserId, 0);
+        unreadCount.put(otherUserId, 0);
+        newChat.setUnreadCount(unreadCount);
+        // Set creation timestamp
+        newChat.setLastMessageTimestamp(new Date());
+
+        // Add to Firestore
+        firestore.collection("chats")
+                .add(newChat)
+                .addOnSuccessListener(documentReference -> {
+                    String chatId = documentReference.getId();
+
+                    // Navigate to the new chat
+                    Intent intent = new Intent(context, ChatActivity.class);
+                    intent.putExtra("chatId", chatId);
+                    intent.putExtra("otherUserId", otherUserId);
+                    context.startActivity(intent);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error creating new chat", e);
+                    Toast.makeText(context, "Error creating chat", Toast.LENGTH_SHORT).show();
+                });
+    }
     @Override
     public int getItemCount() {
         return matches != null ? matches.size() : 0;

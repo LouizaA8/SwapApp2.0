@@ -85,7 +85,7 @@
         android:id="@+id/genderChips"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="5dp"
         app:singleSelection="true">
 
     <com.google.android.material.chip.Chip
