@@ -30,11 +30,17 @@ public class Upload extends AppCompatActivity {
     private ProgressBar progressBar;
     private FirebaseFirestore db;
     private RecyclerView recyclerView;
+    private boolean isComingFromCoverPhoto = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
+
+        // Check if coming from CoverPhoto activity
+        if (getIntent().hasExtra("fromCoverPhoto")) {
+            isComingFromCoverPhoto = getIntent().getBooleanExtra("fromCoverPhoto", false);
+        }
 
         // Initialize Cloudinary MediaManager
         try {
@@ -148,6 +154,13 @@ public class Upload extends AppCompatActivity {
                     captionInput.setText("");
                     imageView.setImageURI(null);
                     imageUri = null;
+
+                    // If coming from CoverPhoto, navigate to home page after upload
+                    if (isComingFromCoverPhoto) {
+                        Intent intent = new Intent(Upload.this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
 
                     finish();
                 })

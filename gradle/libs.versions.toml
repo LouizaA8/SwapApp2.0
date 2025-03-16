@@ -6,6 +6,8 @@ cloudinaryAndroid = "2.2.0"
 firebaseAuthVersion = "21.3.0"
 firebaseDatabase = "21.0.0"
 firebaseFirestore = "25.1.1"
+firebaseFunctions = "21.1.1"
+firebaseMessaging = "24.1.0"
 firebaseStorage = "21.0.1"
 glide = "4.15.1"
 imagepicker = "2.1"
@@ -40,6 +42,8 @@ compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide
 firebase-auth-v2130 = { module = "com.google.firebase:firebase-auth", version.ref = "firebaseAuthVersion" }
 firebase-database = { module = "com.google.firebase:firebase-database", version.ref = "firebaseDatabase" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestore" }
+firebase-functions = { module = "com.google.firebase:firebase-functions", version.ref = "firebaseFunctions" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging", version.ref = "firebaseMessaging" }
 firebase-storage = { module = "com.google.firebase:firebase-storage", version.ref = "firebaseStorage" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 imagepicker = { module = "com.github.dhaval2404:imagepicker", version.ref = "imagepicker" }

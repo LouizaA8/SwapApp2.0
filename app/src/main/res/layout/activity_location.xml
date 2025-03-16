@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/md_theme_background"
     tools:context=".UserLocation">
     <LinearLayout
         android:id="@+id/location"
@@ -104,19 +105,22 @@
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="350dp"
         app:layout_constraintTop_toBottomOf="@id/search_layout"
-        app:layout_constraintBottom_toTopOf="@id/nextProfileSetUp"
+
         />
 
-    <!-- Next Button -->
+
     <ImageView
         android:id="@+id/nextProfileSetUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/circle_right"
-        android:padding="16dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/circle_right"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="30dp"
+        android:contentDescription="next"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

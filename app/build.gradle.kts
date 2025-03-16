@@ -19,66 +19,68 @@ android {
 
 
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+        buildTypes {
+            release {
+                isMinifyEnabled = false
+                proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
+                )
+            }
         }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    buildFeatures {
-        viewBinding = true
+        compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_11
+            targetCompatibility = JavaVersion.VERSION_11
+        }
+        buildFeatures {
+            viewBinding = true
+        }
+
     }
 
-}
+    dependencies {
 
-dependencies {
+        implementation(libs.appcompat)
+        implementation(libs.material)
+        implementation(libs.constraintlayout)
+        implementation(libs.lifecycle.livedata.ktx)
+        implementation(libs.lifecycle.viewmodel.ktx)
+        implementation(libs.navigation.fragment)
+        implementation(libs.navigation.ui)
+        implementation(libs.activity)
+        implementation(libs.firebase.auth)
+        implementation(libs.legacy.support.v4)
+        testImplementation(libs.junit)
+        androidTestImplementation(libs.ext.junit)
+        androidTestImplementation(libs.espresso.core)
+        implementation(libs.viewpager2)
+        implementation(libs.firebase.auth.v2130)
+        implementation(libs.firebase.database)
+        implementation(libs.imagepicker)
+        implementation(libs.play.services.maps)
+        implementation(libs.play.services.location)
+        implementation(libs.places)
+        implementation(libs.places.v330)
+        implementation(libs.play.services.maps.v1810)
+        implementation(libs.firebase.firestore)
+        implementation(libs.firebase.storage)
+        implementation(libs.cloudinary.android)
+        implementation(libs.glide)
+        annotationProcessor(libs.compiler)
+        implementation(libs.cardstackview)
+        implementation(libs.material.v150)
+        implementation(libs.appcompat)
+        implementation(libs.material)
+        implementation(libs.activity)
+        implementation(libs.constraintlayout)
+        implementation(libs.recyclerview)
+        implementation(libs.circleimageview)
+        implementation(libs.appcompat)
+        implementation(libs.material)
+        implementation(libs.activity)
+        implementation(libs.constraintlayout)
+        implementation (libs.firebase.messaging)
+        implementation (libs.firebase.functions)
 
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation(libs.constraintlayout)
-    implementation(libs.lifecycle.livedata.ktx)
-    implementation(libs.lifecycle.viewmodel.ktx)
-    implementation(libs.navigation.fragment)
-    implementation(libs.navigation.ui)
-    implementation(libs.activity)
-    implementation(libs.firebase.auth)
-    implementation(libs.legacy.support.v4)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
-    implementation (libs.viewpager2)
-    implementation (libs.firebase.auth.v2130)
-    implementation (libs.firebase.database)
-    implementation (libs.imagepicker)
-    implementation (libs.play.services.maps)
-    implementation (libs.play.services.location)
-    implementation(libs.places)
-    implementation (libs.places.v330)
-    implementation (libs.play.services.maps.v1810)
-   implementation (libs.firebase.firestore)
-    implementation (libs.firebase.storage)
-    implementation (libs.cloudinary.android)
-    implementation (libs.glide)
-    annotationProcessor (libs.compiler)
-    implementation (libs.cardstackview)
-    implementation (libs.material.v150)
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation(libs.activity)
-    implementation(libs.constraintlayout)
-    implementation(libs.recyclerview)
-    implementation (libs.circleimageview)
-}}
-dependencies {
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation(libs.activity)
-    implementation(libs.constraintlayout)
+    }
 }

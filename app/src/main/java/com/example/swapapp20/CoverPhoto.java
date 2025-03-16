@@ -195,8 +195,11 @@ public class CoverPhoto extends AppCompatActivity {
                         showLoadingState(false);
                         isUploading = false;
                         Toast.makeText(CoverPhoto.this, "Profile Saved Successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(CoverPhoto.this, MainActivity.class));
+                        Intent intent = new Intent(CoverPhoto.this, Upload.class);
+                        intent.putExtra("fromCoverPhoto", true);
+                        startActivity(intent);
                         finish();
+
                     })
                     .addOnFailureListener(e -> {
                         showLoadingState(false);
