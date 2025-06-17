@@ -9,7 +9,7 @@ This project demonstrates how technology can be leveraged to promote sustainable
 ![Static Badge](https://img.shields.io/badge/Java-red)
 ![Static Badge](https://img.shields.io/badge/xml-blue)
 ![Static Badge](https://img.shields.io/badge/Android_Studio-red)<br>
-**HOW IT LOOKS**<br>
+**THE APPLICATION**<br>
 <img width="192" alt="image" src="https://github.com/user-attachments/assets/a4be0692-4fb6-4acb-a3ba-19548ced8d22" />
 <img width="192" alt="image" src="https://github.com/user-attachments/assets/0916d2e6-1ad4-48d0-b9d8-f5915395781f" />
 <img width="192" alt="image" src="https://github.com/user-attachments/assets/c1b814e3-c8bb-45b4-8bf1-c32095a2e276" />
